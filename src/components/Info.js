@@ -6,14 +6,14 @@ const infoStylesVars = {
 
 const infoStyles = {
     root: {
-        margin: '5px',
-        border: '1px solid #cccccc'
+        border: '1px solid #cccccc',
     },
 
     header: {
         backgroundColor: '#3398CC',
         width: '100%',
         height: infoStylesVars.headerHigh,
+        borderBottom: '1px solid #cccccc',
         // border: '1px solid #cccccc',
         // borderBottom: 'none',
     },
@@ -48,7 +48,16 @@ const infoStyles = {
     }
 }
 
+function getAge(birthDateStr){
+    console.log(birthDateStr);
+    let birthDate = new Date(birthDateStr);
+    return new Date(Date.now() - birthDate).getYear() - 70;
+}
+
 class Info extends Component{
+    constructor(props) {
+        super(props);
+    }
     render() {
         return(
             <div style={infoStyles.root}>
@@ -58,19 +67,20 @@ class Info extends Component{
                 <div style={infoStyles.body}>
                     <div style={infoStyles.data}>
                         <div style={infoStyles.dataName}>ФИО</div>
-                        <div style={infoStyles.dataValue}></div>
+                        <div style={infoStyles.dataValue}>
+                            {this.props.currentUser.firstName !== undefined? this.props.currentUser.firstName + ' ' + this.props.currentUser.lastName: ''}
+                        </div>
                     </div>
                     <div style={infoStyles.data}>
                         <div style={infoStyles.dataName}>Возраст</div>
-                        <div style={infoStyles.dataValue}></div>
+                        <div style={infoStyles.dataValue}>{this.props.currentUser.firstName !== undefined? getAge(this.props.currentUser.birthDate): ''}</div>
                     </div>
                     <div style={infoStyles.data}>
                         <div style={infoStyles.dataName}>Диагноз</div>
-                        <div style={infoStyles.dataValue}></div>
+                        <div style={infoStyles.dataValue}>{this.props.currentUser.firstName !== undefined? this.props.currentUser.diagnosis: ''}</div>
                     </div>
                 </div>
             </div>
-
         );
     }
 }
