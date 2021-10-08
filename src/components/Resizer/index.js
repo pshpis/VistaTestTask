@@ -31,6 +31,8 @@ class Resizer extends Component{
                 this.state.active = true;
                 this.setState(this.state);
 
+                document.body.style = "cursor: col-resize;";
+
                 document.onmousemove = event => {
                     console.log(0);
                     if (this.state.active === false) return;
@@ -43,6 +45,7 @@ class Resizer extends Component{
                 }
 
                 document.onmouseup = event => {
+                    document.body.style = "cursor: auto;";
                     console.log(-2);
                     this.state.active = false;
                     this.setState(this.state);

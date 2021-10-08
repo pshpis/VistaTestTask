@@ -60,7 +60,7 @@ class Info extends Component{
     }
     render() {
         return(
-            <div style={infoStyles.root}>
+            <div style={this.props.currentUser.firstName !== undefined? {border: '2px solid #6581BE'}: {border: '1px solid #cccccc'}}>
                 <div style={infoStyles.header}>
                     <div style={infoStyles.headerText}>Информация о пациенте</div>
                 </div>
