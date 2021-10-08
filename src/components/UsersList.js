@@ -7,6 +7,9 @@ const UsersListStylesVars = {
 
 const UsersListStyles = {
     root: {
+        userSelect: 'none',
+        webkitUserSelect: 'none',
+        msUserSelect: 'none',
         border: '1px solid #cccccc',
     },
 
@@ -60,10 +63,6 @@ const UsersListStyles = {
         padding: '5px',
         // textAlign: 'center',
     }
-}
-
-const clone = (x) => {
-    return JSON.parse(JSON.stringify(x));
 }
 
 class UsersList extends Component{

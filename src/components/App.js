@@ -10,20 +10,25 @@ const clone = (x) => {
 class App extends Component{
     constructor(props) {
         super(props);
+
+
         this.state = {
             currentUser: {},
+            InfoWindowWidth: (window.innerWidth - 20 - 15) / 2,
+        }
 
+        this.appStyles = {
+            parent: {
+                padding: '10px',
+                    display: 'grid',
+                    height: '100vh',
+                    width: '100vw'
+            },
         }
     }
 
-    appStyles = {
-        parent: {
-            padding: '10px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 15px 1fr',
-            height: '100vh',
-            width: '100vw'
-        },
+    getUsersListWidth(){
+        return (window.innerWidth - 20 - 15) - this.state.InfoWindowWidth;
     }
 
     updateCurrentUser = user => {
@@ -31,11 +36,19 @@ class App extends Component{
         this.setState(this.state);
     }
 
+    updateInfoWindowWidth = width => {
+        console.log(width);
+        this.state.InfoWindowWidth = width;
+        this.setState(this.state);
+    }
+
     render() {
         return(
-            <div style={this.appStyles.parent}>
+            <div style={
+                Object.assign({gridTemplateColumns: this.state.InfoWindowWidth + 'px 15px ' + this.getUsersListWidth() + 'px'}, this.appStyles.parent)
+            }>
                 <Info currentUser = {this.state.currentUser} />
-                <Resizer />
+                <Resizer updateInfoWindowWidth = {this.updateInfoWindowWidth}/>
                 <UsersList currentUser = {this.state.currentUser} updateCurrentUser = {this.updateCurrentUser}/>
             </div>
         );
