@@ -73,10 +73,11 @@ class UsersList extends Component{
         this.state = {
             activeTab: 0,
             currentUser: props.currentUser,
-            wasDataLoad: false,
             usersTab0: [],
             usersTab1: [],
         }
+
+        this.loadData();
     }
 
     renderTab(tabId){
@@ -109,7 +110,7 @@ class UsersList extends Component{
         data.forEach(user => {
             id ++;
 
-            res.push(<tr style={
+            res.push(<tr key={"tr" + id} style={
                 JSON.stringify(user) === JSON.stringify(this.state.currentUser)?
                     Object.assign({}, UsersListStyles.usersTableRow, UsersListStyles.usersTableRowActive):
                     UsersListStyles.usersTableRow
@@ -125,26 +126,23 @@ class UsersList extends Component{
     }
 
     loadData(){
-        if (this.state.wasDataLoad === false){
-            axios.get("presentList.json")
-                .then(response => response.data)
-                .then(data => {
-                    this.state.usersTab0 = data;
-                    this.setState(this.state);
-                })
-            axios.get("quittingList.json")
-                .then(response => response.data)
-                .then(data => {
-                    this.state.usersTab1 = data;
-                    this.setState(this.state);
-                })
-            this.state.wasDataLoad = true;
-            this.setState(this.state);
-        }
+        axios.get("presentList.json")
+            .then(response => response.data)
+            .then(data => {
+                this.state.usersTab0 = data;
+                this.setState(this.state);
+            })
+        axios.get("quittingList.json")
+            .then(response => response.data)
+            .then(data => {
+                this.state.usersTab1 = data;
+                this.setState(this.state);
+            })
+        this.state.wasDataLoad = true;
+        this.setState(this.state);
     }
 
     render() {
-        this.loadData();
         return(
             <div style={UsersListStyles.root}>
                 <div style={UsersListStyles.header}>
@@ -154,7 +152,7 @@ class UsersList extends Component{
                 <div style={UsersListStyles.body}>
                     <table style={UsersListStyles.usersTable}>
                         <tbody>
-                        <tr style={Object.assign({color: '#878787'}, UsersListStyles.usersTableRow)}>
+                        <tr style={Object.assign({color: '#878787'}, UsersListStyles.usersTableRow)} key={"tr0"}>
                             <td style={UsersListStyles.usersTableCell}>№ ИБ</td>
                             <td style={UsersListStyles.usersTableCell}>ФИО</td>
                             <td style={UsersListStyles.usersTableCell}>{this.state.activeTab === 0? 'Палата': 'Причина выбытия'}</td>

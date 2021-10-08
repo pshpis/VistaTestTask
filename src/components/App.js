@@ -12,6 +12,7 @@ class App extends Component{
         super(props);
         this.state = {
             currentUser: {},
+
         }
     }
 
@@ -26,9 +27,8 @@ class App extends Component{
     }
 
     updateCurrentUser = user => {
-        this.state.currentUser = clone(user);
+        this.state.currentUser = user;
         this.setState(this.state);
-        console.log()
     }
 
     render() {
